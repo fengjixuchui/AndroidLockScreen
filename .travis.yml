@@ -7,8 +7,9 @@ before_cache:
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
+    - $HOME/.android/build-cache
 
 android:
   components:
@@ -28,7 +29,7 @@ deploy:
   provider: releases
   api_key:
     secure: "${GITHUB_TOKEN}"
-  file: app/build/outputs/apk/release/app-release-signed.apk
+  file: app/build/outputs/apk/release/app-release.apk
   skip_cleanup: true
   on:
     tags: true
