@@ -1,4 +1,6 @@
 .gradle/
+RabbitCommon.keystore
+keystore.properties
 local.properties
 .idea/
 .qmake.stash

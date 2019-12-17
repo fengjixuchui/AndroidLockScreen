@@ -1,5 +1,16 @@
-apply plugin: 'com.android.application'
+// Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+def keystorePropertiesFile = rootProject.file("keystore.properties")
 
+// Initialize a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+
+if(keystorePropertiesFile.exists()) {
+    // Load your keystore.properties file into the keystoreProperties object.
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -10,10 +21,23 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties.containsKey('keyAlias') ? keystoreProperties['keyAlias'] : System.getenv('keyAlias')
+            keyPassword keystoreProperties.containsKey('keyPassword') ? keystoreProperties['keyPassword'] : System.getenv('keyPassword')
+            storePassword keystoreProperties.containsKey('storePassword') ? keystoreProperties['storePassword'] : System.getenv('storePassword')
+            storeFile file(keystoreProperties.containsKey('storeFile') ? keystoreProperties['storeFile'] : System.getenv('storeFile'))
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            if(keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            }
         }
     }
 }
