@@ -3,6 +3,8 @@
 
 Android one button lock screen
 
+Project home site: https://github.com/KangLin/AndroidLockScreen
+
 ### [Download install package](https://github.com/KangLin/AndroidLockScreen/releases/latest)
 + [app-release.apk](https://github.com/KangLin/AndroidLockScreen/releases/download/v0.0.3/app-release.apk)
 
